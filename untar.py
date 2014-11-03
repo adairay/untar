@@ -28,7 +28,10 @@ if __name__ == '__main__':
             i = i + 1
         if selected['extensions']:
             try:
-                subprocess.call([liste_ext[selected['extensions'][0]][0], liste_ext[selected['extensions'][0]][1], selected['path']])
+                if liste_ext[selected['extensions'][0]][1]:
+                    subprocess.call([liste_ext[selected['extensions'][0]][0], liste_ext[selected['extensions'][0]][1], selected['path']])
+                else:
+                    subprocess.call([liste_ext[selected['extensions'][0]][0], selected['path']])
             except OSError:
                 print "Wrong extension or wrong file"
         else:
