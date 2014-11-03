@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import npyscreen
-import os
+import subprocess
 
 def myFunction(*args):
     liste_ext = [u".tar.gz", u".tar.bz2", u".bz2", u".rar", u".gz", u".tar", u".tbz2", u".tgz", u".zip", u".Z"]
@@ -15,7 +15,9 @@ def myFunction(*args):
 if __name__ == '__main__':
     i = 1
     direction = u"/"
-    liste_ext = [u"tar -xzf", u"tar -xjf", u"bunzip2", u"rar x", u"gunzip", u"tar -xf", u"tar -xjf", u"tar -xzf", u"unzip", u"uncompress"]
+    liste_ext = [(u"tar", u"-xzf"), (u"tar ", "-xjf"), (u"bunzip2", u""), (u"rar", u"x"),
+                 (u"gunzip", u""), (u"tar", "-xf"), (u"tar", u"-xjf"), (u"tar", u"-xzf"),
+                 (u"unzip", u""), (u"uncompress", u"")]
 
     selected = npyscreen.wrapper_basic(myFunction)
     cutPath = selected['path']
@@ -26,7 +28,7 @@ if __name__ == '__main__':
             i = i + 1
         if selected['extensions']:
             try:
-                os.system(u"{0} {1}".format(liste_ext[selected['extensions'][0]], selected['path']))
+                subprocess.call([liste_ext[selected['extensions'][0]][0], liste_ext[selected['extensions'][0]][1], selected['path']])
             except OSError:
                 print "Wrong extension or wrong file"
         else:
